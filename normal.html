@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYDRASPHERE | Smart Fish Tank Solution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #00a8e8;
+            --secondary-color: #0077b6;
+            --accent-color: #00cdac;
+            --dark-color: #003459;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --white-color: #ffffff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Roboto Slab', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 168, 232, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-header p {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-family: 'Roboto Slab', serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 5px;
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: 100px;
+            position: relative;
+            overflow: hidden;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .hero-content h1 .highlight {
+            color: var(--primary-color);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .main-image {
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 2;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            top: -100px;
+            right: -100px;
+            z-index: 1;
+            opacity: 0.2;
+            animation: blob-animation 8s infinite alternate;
+        }
+
+        @keyframes blob-animation {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            50% {
+                border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            }
+            100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+
+        .about .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .about-text ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .about-text ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .about-text ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        /* AI Section */
+        .ai-section {
+            padding: 100px 0;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .ai-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        .ai-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .ai-section .section-header h2,
+        .ai-section .section-header p {
+            color: white;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .ai-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-card .icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .ai-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .ai-highlight {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .ai-image {
+            flex: 1;
+        }
+
+        .ai-image img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ai-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .ai-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .ai-content ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .ai-content li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .ai-content li::before {
+            content: '\f0c8';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+
+        .features .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        /* Feature Card Flip Effect */
+        .feature-card-container {
+            perspective: 1000px;
+            height: 300px;
+        }
+
+        .feature-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .feature-card-container:hover .feature-card {
+            transform: rotateY(180deg);
+        }
+
+        .feature-card-front, .feature-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .feature-card-front {
+            background: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card-back {
+            background: var(--primary-color);
+            color: white;
+            transform: rotateY(180deg);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .feature-card-back h3 {
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-card-back p {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 168, 232, 0.1) 0%, rgba(0, 205, 172, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .feature-card-front h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .feature-card-front p {
+            color: var(--gray-color);
+            text-align: center;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 100px 0;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .team::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .team .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .team .section-header h2,
+        .team .section-header p {
+            color: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 20px auto;
+            border: 5px solid var(--primary-color);
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .team-member:hover .member-image img {
+            transform: scale(1.1);
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .team-member .role {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .team-member .bio {
+            padding: 0 20px;
+            color: var(--gray-color);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+
+        .testimonials .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-container {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .testimonial {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .testimonial.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .quote {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--dark-color);
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .author-info p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        /* Testimonial controls */
+        .testimonial-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .prev-btn, .next-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 10px;
+            transition: var(--transition);
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        .dots {
+            display: flex;
+            gap: 10px;
+            margin: 0 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dot.active {
+            background-color: var(--primary-color);
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animation classes */
+        .reveal {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Navigation */
+        @media screen and (max-width: 768px) {
+            .burger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                right: 0;
+                top: 80px;
+                height: calc(100vh - 80px);
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-evenly;
+                width: 50%;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+                z-index: 999;
+                box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-active {
+                transform: translateX(0%);
+            }
+            
+            .toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .toggle .line2 {
+                opacity: 0;
+            }
+            
+            .toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+        }
+
+        /* Responsive design for various sections */
+        @media screen and (max-width: 990px) {
+            .hero .container,
+            .about-content,
+            .ai-highlight {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .hero-content,
+            .hero-image,
+            .about-image,
+            .about-text,
+            .ai-image,
+            .ai-content {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .feature-card-container {
+                height: 350px;
+            }
+            
+            .about-text ul,
+            .ai-content ul {
+                text-align: left;
+            }
+            
+            .blob {
+                display: none;
+            }
+            
+            .hero {
+                padding-top: 120px;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .team-grid,
+            .ai-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial {
+                padding: 30px 20px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .feature-card-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">HYDRASPHERE</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#ai-section">AI Technology</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>The Future of <span class="highlight">Aquarium Management</span></h1>
+                <p>Automated Fish Tank with AI Vision, IoT Controls & Water Quality Monitoring</p>
+                <div class="cta-buttons">
+                    <a href="#features" class="btn btn-primary">Explore Features</a>
+                    <a href="#ai-section" class="btn btn-secondary">Learn About Our AI</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/600/400" alt="Smart Fish Tank" class="main-image">
+                <div class="blob"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Design</h2>
+                <p>A cutting-edge approach to fish tank management</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="/api/placeholder/500/300" alt="Fish Tank Design">
+                </div>
+                <div class="about-text">
+                    <h3>Innovative Technology Meets Aquatic Care</h3>
+                    <p>Our automated fish tank system uses dual ESP32 microcontrollers and an ESP32 CAM to create a seamless, intelligent aquarium management system. The design incorporates:</p>
+                    <ul>
+                        <li>Computer vision for fish monitoring</li>
+                        <li>IoT-controlled feeding mechanisms</li>
+                        <li>Real-time pH monitoring</li>
+                        <li>Smart water filtration system</li>
+                        <li>Mobile app integration</li>
+                    </ul>
+                    <p>Designed with both functionality and aesthetics in mind, our system ensures your aquatic friends receive optimal care while providing you with an elegant display piece.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section id="ai-section" class="ai-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why AI in Fish Tanks?</h2>
+                <p>Transforming aquatic care through artificial intelligence</p>
+            </div>
+            <div class="ai-grid">
+                <div class="ai-card">
+                    <div class="icon"><i class="fas fa-brain"></i></div>
+                    <h3>Smart Monitoring</h3>
+                    <p>Our teachable machine AI model constantly observes fish behavior to detect unusual patterns that might indicate health issues.</p>
+                </div>
+                <div class="ai-card">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <h3>Adaptive Feeding</h3>
+                    <p>AI algorithms learn your fish's eating patterns and automatically adjust feeding schedules and quantities for optimal nutrition.</p>
+                </div>
+                <div class="ai-card">
+                    <div class="icon"><i class="fas fa-tint"></i></div>
+                    <h3>Water Quality Prediction</h3>
+                    <p>Our predictive models analyze water parameter trends to forecast potential issues before they become critical.</p>
+                </div>
+            </div>
+            <div class="ai-highlight">
+                <div class="ai-image">
+                    <img src="/api/placeholder/500/300" alt="AI Vision System">
+                </div>
+                <div class="ai-content">
+                    <h3>Computer Vision Technology</h3>
+                    <p>Our ESP32-CAM implementation uses TensorFlow Lite to power an advanced fish monitoring system that:</p>
+                    <ul>
+                        <li>Identifies different fish species in your tank</li>
+                        <li>Monitors fish health through behavior analysis</li>
+                        <li>Detects and alerts you to potential aggression between fish</li>
+                        <li>Tracks growth patterns over time</li>
+                        <li>Provides visual feeding confirmation</li>
+                    </ul>
+                    <p>The system continuously learns and improves its accuracy through regular updates and your feedback.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Smart Features</h2>
+                <p>Discover what makes our system unique</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card-container">
+                    <div class="feature-card">
+                        <div class="feature-card-front">
+                            <div class="feature-icon"><i class="fas fa-wifi"></i></div>
+                            <h3>IoT Integration</h3>
+                            <p>Control and monitor your tank from anywhere</p>
+                        </div>
+                        <div class="feature-card-back">
+                            <h3>IoT Integration</h3>
+                            <p>Connect to your smart home ecosystem, receive real-time alerts, and control all tank functions remotely through our intuitive mobile app.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card-container">
+                    <div class="feature-card">
+                        <div class="feature-card-front">
+                            <div class="feature-icon"><i class="fas fa-thermometer-half"></i></div>
+                            <h3>Environmental Control</h3>
+                            <p>Perfect conditions for your aquatic life</p>
+                        </div>
+                        <div class="feature-card-back">
+                            <h3>Environmental Control</h3>
+                            <p>Precision temperature regulation, automated lighting cycles, and water flow control ensure ideal living conditions for your specific fish species.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card-container">
+                    <div class="feature-card">
+                        <div class="feature-card-front">
+                            <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                            <h3>Smart Feeding</h3>
+                            <p>Automated precision feeding system</p>
+                        </div>
+                        <div class="feature-card-back">
+                            <h3>Smart Feeding</h3>
+                            <p>Programmable feeding schedules, portion control, and visual confirmation ensure your fish receive optimal nutrition even when you're away.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card-container">
+                    <div class="feature-card">
+                        <div class="feature-card-front">
+                            <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                            <h3>Fish Monitoring</h3>
+                            <p>AI-powered fish behavior analysis</p>
+                        </div>
+                        <div class="feature-card-back">
+                            <h3>Fish Monitoring</h3>
+                            <p>Our computer vision system tracks individual fish, monitors behavior patterns, and alerts you to signs of hunger in your aquatic pets.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card-container">
+                    <div class="feature-card">
+                        <div class="feature-card-front">
+                            <div class="feature-icon"><i class="fas fa-vial"></i></div>
+                            <h3>Water Quality</h3>
+                            <p>Real-time chemistry monitoring</p>
+                        </div>
+                        <div class="feature-card-back">
+                            <h3>Water Quality</h3>
+                            <p>Continuous monitoring of pH, ammonia and temperature with detailed history tracking and automated alerts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card-container">
+                    <div class="feature-card">
+                        <div class="feature-card-front">
+                            <div class="feature-icon"><i class="fas fa-tablet-alt"></i></div>
+                            <h3>Mobile App</h3>
+                            <p>Complete control at your fingertips</p>
+                        </div>
+                        <div class="feature-card-back">
+                            <h3>Mobile App</h3>
+                            <p>Our intuitive app provides complete tank management, customizable alerts, livestream viewing, and educational content about your fish species.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Team</h2>
+                <p>Meet the experts behind HYDRASPHERE</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="sheza.jpg" alt="Team Member">
+                    </div>
+                    <h3>Sheza Safeer</h3>
+                    <p class="role">Main Designer</p>
+                    <p class="bio">Creates intuitive user experiences and designs beautiful interfaces that make managing complex systems simple.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="avantika.jpg" alt="Team Member">
+                    </div>
+                    <h3>Avantika Arun</h3>
+                    <p class="role">Assistant Designer</p>
+                    <p class="bio">Creates intuitive user experiences and designs beautiful interfaces that make managing complex systems simple.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="seana.jpg" alt="Team Member">
+                    </div>
+                    <h3>Seana Poulose</h3>
+                    <p class="role">Content Developer</p>
+                    <p class="bio">qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="fellah.jpg" alt="Team Member">
+                    </div>
+                    <h3>Fellah B Faisal</h3>
+                    <p class="role">Manufacturing Head</p>
+                    <p class="bio">qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="rachna.jpg" alt="Team Member">
+                    </div>
+                    <h3>Rachna S Nair</h3>
+                    <p class="role">R&D Head</p>
+                    <p class="bio">Experience in aquatic ecosystems and ensures our technology supports optimal fish health and habitat.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="nakshathra.jpg" alt="Team Member">
+                    </div>
+                    <h3>Nakshathra A J</h3>
+                    <p class="role">Marketing Head</p>
+                    <p class="bio">qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Users Say</h2>
+                <p>Hear from our satisfied customers</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-container">
+                    <div class="testimonial active">
+                        <div class="quote">"The HYDRASPHERE system has completely transformed how I care for my tropical fish. The AI monitoring gives me peace of mind, and the water quality tracking has eliminated the guesswork. My fish have never been healthier!"</div>
+                        <div class="author">
+                            <img src="/api/placeholder/50/50" alt="Testimonial Author">
+                            <div class="author-info">
+                                <h4>LEO ALEX</h4>
+                                <p>Tropical Fish Enthusiast</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="quote">"As a marine biology teacher, I've installed HYDRASPHERE in our classroom aquariums. The students are fascinated by the technology, and it's become an incredible teaching tool. The data logging features are particularly valuable for our science projects."</div>
+                        <div class="author">
+                            <img src="/api/placeholder/50/50" alt="Testimonial Author">
+                            <div class="author-info">
+                                <h4>DHEERAJ</h4>
+                                <p>High School Science Teacher</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="quote">"This is the best product in the market...Totally worth it!!!"</div>
+                        <div class="author">
+                            <img src="/api/placeholder/50/50" alt="Testimonial Author">
+                            <div class="author-info">
+                                <h4>Aaliyaah Fatima</h4>
+                                <p>Business Executive & Tank Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="testimonial">
+                        <div class="quote">"I travel frequently for work and was always worried about my aquarium. With HYDRASPHERE, I can check on my fish from anywhere, adjust settings remotely, and receive alerts if anything needs attention. It's like having a professional aquarist on standby 24/7."</div>
+                        <div class="author">
+                            <img src="/api/placeholder/50/50" alt="Testimonial Author">
+                            <div class="author-info">
+                                <h4>ANIKETH M.</h4>
+                                <p>Business Executive & Tank Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-controls">
+                    <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="dots">
+                        <span class="dot active" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                    </div>
+                    <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>HYDRASPHERE</h2>
+                    <p>Smart solutions for aquatic enthusiasts</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/hydrasphere3?igsh=OHBsc3ByMHR6YWpl"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HYDRASPHERE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener('click', () => {
+            // Toggle Nav
+            nav.classList.toggle('nav-active');
+            
+            // Toggle Burger Animation
+            burger.classList.toggle('toggle');
+            
+            // Animate Links
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+        });
+
+        // Testimonial Slider
+        const testimonials = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        let currentIndex = 0;
+
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            testimonials[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentIndex = index;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % testimonials.length;
+            showTestimonial(currentIndex);
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.getAttribute('data-index'));
+                showTestimonial(index);
+            });
+        });
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % testimonials.length;
+            showTestimonial(currentIndex);
+        }, 7000);
+
+        // Scroll Reveal Animation
+        window.addEventListener('scroll', reveal);
+
+        function reveal() {
+            const reveals = document.querySelectorAll('.section-header, .about-content, .ai-grid, .ai-highlight, .features-grid, .team-grid, .testimonial-slider');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('reveal');
+                }
+            }
+        }
+    </script>
+</body>
+</html>`

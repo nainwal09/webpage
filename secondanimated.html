@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaFuture | AI-Powered Smart Aquariums</title>
+  <style>
+    :root {
+      --primary-color: #005D8F;
+      --secondary-color: #00BFD9;
+      --accent-color: #00E3CC;
+      --dark-color: #003B59;
+      --light-color: #E0F7FF;
+      --text-light: #E0F7FF;
+      --text-dark: #003B59;
+      --gradient: linear-gradient(135deg, #005D8F, #00BFD9, #00E3CC);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #001B29;
+      color: var(--text-light);
+      overflow-x: hidden;
+    }
+    
+    /* Wave Animation */
+    .wave-container {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1;
+    }
+    
+    .wave {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: rgba(0, 93, 143, 0.2);
+      border-radius: 43%;
+      transform: translate(-25%, 0);
+      animation: wave 15s infinite linear;
+    }
+    
+    .wave:nth-child(2) {
+      background: rgba(0, 191, 217, 0.1);
+      border-radius: 40%;
+      transform: translate(-20%, -5%);
+      animation: wave 17s infinite linear;
+    }
+    
+    .wave:nth-child(3) {
+      background: rgba(0, 227, 204, 0.1);
+      border-radius: 42%;
+      transform: translate(-30%, -10%);
+      animation: wave 21s infinite linear;
+    }
+    
+    @keyframes wave {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* Bubbles Animation */
+    .bubbles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      bottom: -100px;
+      animation: bubble-rise 15s infinite;
+    }
+    
+    @keyframes bubble-rise {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(20px);
+        opacity: 0;
+      }
+    }
+    
+    /* Fish Animation */
+    .fish-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .fish {
+      position: absolute;
+      width: 50px;
+      height: 30px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 30"><path fill="%2300BFD9" d="M45,15c0,0-10,10-30,10C5,25,0,15,0,15s5-10,15-10C35,5,45,15,45,15z M42,15c0,0-9-8-27-8c-9,0-12,8-12,8s3,8,12,8C33,23,42,15,42,15z M37,15c0,2.2-1.8,4-4,4s-4-1.8-4-4s1.8-4,4-4S37,12.8,37,15z M35,15c0,1.1-0.9,2-2,2s-2-0.9-2-2s0.9-2,2-2S35,13.9,35,15z M35,15c0,0-0.9-0.5-2-0.5s-2,0.5-2,0.5s0.9,0.5,2,0.5S35,15,35,15z"/></svg>') no-repeat;
+      animation: fish-swim 30s linear infinite;
+      opacity: 0.7;
+    }
+    
+    @keyframes fish-swim {
+      0% {
+        transform: translateX(-100px) translateY(var(--y)) rotateY(180deg);
+      }
+      49% {
+        transform: translateX(calc(100vw + 50px)) translateY(var(--y)) rotateY(180deg);
+      }
+      50% {
+        transform: translateX(calc(100vw + 50px)) translateY(var(--y)) rotateY(0deg);
+      }
+      99% {
+        transform: translateX(-100px) translateY(var(--y)) rotateY(0deg);
+      }
+      100% {
+        transform: translateX(-100px) translateY(var(--y)) rotateY(180deg);
+      }
+    }
+    
+    /* Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(0, 27, 41, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient);
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin: 0 15px;
+    }
+    
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+    
+    .nav-links a:before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: var(--gradient);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover:before {
+      width: 100%;
+    }
+    
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+    
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-light);
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 5%;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      z-index: 1;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: pulse 5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        text-shadow: 0 0 5px rgba(0, 227, 204, 0.5);
+      }
+      50% {
+        text-shadow: 0 0 20px rgba(0, 227, 204, 0.8);
+      }
+      100% {
+        text-shadow: 0 0 5px rgba(0, 227, 204, 0.5);
+      }
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    
+    .cta-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--gradient);
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 227, 204, 0.4);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 227, 204, 0.6);
+    }
+    
+    /* Sections */
+    section {
+      padding: 100px 5%;
+      position: relative;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 2.5rem;
+      color: var(--accent-color);
+    }
+    
+    /* Design Section */
+    .designs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .design-card {
+      background: rgba(0, 59, 89, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .design-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .design-img {
+      width: 100%;
+      height: 200px;
+      background-color: var(--primary-color);
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .design-content {
+      padding: 20px;
+    }
+    
+    .design-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: var(--secondary-color);
+    }
+    
+    /* Features Section */
+    .features-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .feature-card {
+      position: relative;
+      height: 300px;
+      perspective: 1000px;
+    }
+    
+    .feature-card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+    
+    .feature-card:hover .feature-card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .feature-front, .feature-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .feature-front {
+      background: rgba(0, 59, 89, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .feature-back {
+      background: var(--gradient);
+      color: var(--text-dark);
+      transform: rotateY(180deg);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    /* AI Section */
+    .ai-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .ai-card {
+      position: relative;
+      height: 300px;
+      perspective: 1000px;
+    }
+    
+    .ai-card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+    
+    .ai-card:hover .ai-card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .ai-front, .ai-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .ai-front {
+      background: rgba(0, 59, 89, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .ai-back {
+      background: var(--gradient);
+      color: var(--text-dark);
+      transform: rotateY(180deg);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      overflow-y: auto;
+    }
+    
+    .ai-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    
+    .ai-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    /* Team Section */
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .team-card {
+      background: rgba(0, 59, 89, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .team-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .team-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 30px auto 20px;
+      background-color: var(--secondary-color);
+      background-size: cover;
+      background-position: center;
+      border: 5px solid var(--dark-color);
+    }
+    
+    .team-name {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+      color: var(--secondary-color);
+    }
+    
+    .team-role {
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+    
+    .team-bio {
+      padding: 0 20px 20px;
+      font-size: 0.9rem;
+    }
+    
+    .team-social {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 20px;
+    }
+    
+    .team-social a {
+      margin: 0 10px;
+      color: var(--text-light);
+      transition: all 0.3s ease;
+    }
+    
+    .team-social a:hover {
+      color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+    
+    /* Testimonials Section */
+    .testimonials-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .testimonial {
+      background: rgba(0, 59, 89, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      background-color: var(--secondary-color);
+    }
+    
+    .author-info h4 {
+      margin-bottom: 5px;
+      color: var(--secondary-color);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark-color);
+      padding: 50px 5% 20px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .footer-logo-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--gradient);
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .footer-links h3 {
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent-color);
+    }
+    
+    .social-links {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      margin-right: 10px;
+      color: var(--text-light);
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: var(--gradient);
+      color: var(--text-dark);
+      transform: translateY(-3px);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        right: 0;
+        top: 80px;
+        background: rgba(0, 27, 41, 0.95);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        transition: all 0.5s ease;
+        z-index: 10;
+      }
+      
+      .nav-links.active {
+        height: 300px;
+        padding: 20px 0;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .hamburger.active div:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+      }
+      
+      .hamburger.active div:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .hamburger.active div:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Wave Background -->
+  <div class="wave-container">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+  
+  <!-- Bubbles Animation -->
+  <div class="bubbles" id="bubbles"></div>
+  
+  <!-- Fish Animation -->
+  <div class="fish-container" id="fish-container"></div>
+  
+  <!-- Header/Navigation -->
+  <header>
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#003B59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 9a7 7 0 0 1 12-4"></path>
+          <path d="M15 5h7v7"></path>
+          <path d="M2 16a7 7 0 0 0 12 4"></path>
+          <path d="M9 19h7v-7"></path>
+        </svg>
+      </div>
+      AquaFuture
+    </a>
+    
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#design">Our Design</a></li>
+      <li><a href="#ai">Why AI</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+    </ul>
+    
+    <div class="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>The Future of Aquariums is Here</h1>
+      <p>Introducing AquaFuture - a revolutionary smart aquarium system powered by AI and IoT technology. Experience the perfect harmony of nature and technology with automated monitoring, feeding, and maintenance.</p>
+      <a href="#features" class="cta-btn">Discover Features</a>
+    </div>
+  </section>
+  
+  <!-- Design Section -->
+  <section id="design">
+    <h2 class="section-title">Our Designs</h2>
+    <div class="designs">
+      <div class="design-card">
+        <div class="design-img" style="background-color: #005D8F;"></div>
+        <div class="design-content">
+          <h3 class="design-title">Oceanic Elegance</h3>
+          <p>Sleek, modern design with curved glass and ambient lighting that transforms your space into an underwater sanctuary.</p>
+        </div>
+      </div>
+      
+      <div class="design-card">
+        <div class="design-img" style="background-color: #00BFD9;"></div>
+        <div class="design-content">
+          <h3 class="design-title">Reef Explorer</h3>
+          <p>Multi-level tank design inspired by natural coral reefs, providing a complex ecosystem for diverse marine life.</p>
+        </div>
+      </div>
+      
+      <div class="design-card">
+        <div class="design-img" style="background-color: #00E3CC;"></div>
+        <div class="design-content">
+          <h3 class="design-title">Nano Cube</h3>
+          <p>Compact, fully automated system perfect for small spaces. Advanced technology packed into a beautiful minimalist design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- AI Section -->
+  <section id="ai">
+    <h2 class="section-title">Why AI in Aquariums?</h2>
+    <div class="ai-benefits">
+      <div class="ai-card">
+        <div class="ai-card-inner">
+          <div class="ai-front">
+            <div class="ai-icon">🐟</div>
+            <h3 class="ai-title">Smart Fish Recognition</h3>
+            <p>Intelligent monitoring of fish behavior and health</p>
+          </div>
+          <div class="ai-back">
+            <h3>Smart Fish Recognition</h3>
+            <p>Our AI system uses computer vision through ESP32-CAM to identify different fish species, monitor their swimming patterns, and detect unusual behavior that might indicate health problems. The system learns your specific fish over time, providing personalized care recommendations based on species, age, and behavior patterns.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="ai-card">
+        <div class="ai-card-inner">
+          <div class="ai-front">
+            <div class="ai-icon">🍽️</div>
+            <h3 class="ai-title">Optimized Feeding</h3>
+            <p>Precise, automated feeding based on real needs</p>
+          </div>
+          <div class="ai-back">
+            <h3>Optimized Feeding</h3>
+            <p>Using Teachable Machine AI models, our system optimizes feeding schedules and portions based on fish activity, species requirements, and tank conditions. It prevents overfeeding (a common cause of water quality issues) and ensures all fish receive proper nutrition. The system can identify when certain fish aren't getting enough food and adjust dispensing patterns accordingly.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="ai-card">
+        <div class="ai-card-inner">
+          <div class="ai-front">
+            <div class="ai-icon">💧</div>
+            <h3 class="ai-title">Water Quality Prediction</h3>
+            <p>Proactive maintenance for perfect water conditions</p>
+          </div>
+          <div class="ai-back">
+            <h3>Water Quality Prediction</h3>
+            <p>Our AI doesn't just monitor current water parameters—it predicts future changes based on historical data, bioload, feeding patterns, and even seasonal factors. The system can forecast pH fluctuations, ammonia spikes, and other water quality issues days before they become problematic, allowing for preventive maintenance rather than reactive corrections, which significantly reduces fish stress and mortality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section id="features">
+    <h2 class="section-title">Smart Features</h2>
+    <div class="features-container">
+      <div class="feature-card">
+        <div class="feature-card-inner">
+          <div class="feature-front">
+            <div class="feature-icon">📷</div>
+            <h3 class="feature-title">AI Vision Monitoring</h3>
+            <p>ESP32-CAM for real-time observation</p>
+          </div>
+          <div class="feature-back">
+            <h3>AI Vision Monitoring</h3>
+            <p>Our system uses ESP32-CAM to continuously monitor your aquarium, providing real-time video feeds and image analysis. The camera tracks fish movement, detects potential health issues, and even counts fish to ensure none are missing. The integrated computer vision algorithms can identify aggressive behavior, signs of disease, and breeding activity.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card-inner">
+          <div class="feature-front">
+            <div class="feature-icon">🤖</div>
+            <h3 class="feature-title">Smart Feeding System</h3>
+            <p>Teachable Machine AI for perfect portions</p>
+          </div>
+          <div class="feature-back">
+            <h3>Smart Feeding System</h3>
+            <p>Using Teachable Machine AI models, our automated feeding system learns your fish's eating patterns and adjusts accordingly. The precision feeder can dispense exact amounts based on species requirements, preventing waste and improving water quality. Manual override and scheduling options available through the app give you complete control.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card-inner">
+          <div class="feature-front">
+            <div class="feature-icon">🧪</div>
+            <h3 class="feature-title">Water Quality Control</h3>
+            <p>pH sensors with automated filtration</p>
+          </div>
+          <div class="feature-back">
+            <h3>Water Quality Control</h3>
+            <p>Our integrated pH level sensors continuously monitor water quality, while the submersible pump automatically filters and refreshes water as needed. The system tracks multiple parameters including ammonia, nitrite, nitrate, and temperature, providing alerts before problems occur and automatically adjusting filtration when needed.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card-inner">
+          <div class="feature-front">
+            <div class="feature-icon">⏱️</div>
+            <h3 class="feature-title">Scheduled Maintenance</h3>
+            <p>Automated timers with manual override</p>
+          </div>
+          <div class="feature-back">
+            <h3>Scheduled Maintenance</h3>
+            <p>Set up custom maintenance schedules for feeding, water changes, and filter cleaning. Our smart timers ensure perfect timing every time, but you can easily switch to manual mode when you want more control. The manual feeding timer allows you to schedule precise feeding times regardless of whether you're home or away.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card-inner">
+          <div class="feature-front">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">Mobile Control</h3>
+            <p>Full control from anywhere in the world</p>
+          </div>
+          <div class="feature-back">
+            <h3>Mobile Control</h3>
+            <p>Control every aspect of your aquarium from our intuitive mobile app. Watch live video feeds, adjust lighting, trigger feeding, or monitor water parameters from anywhere. The app sends critical alerts about water quality, fish health, and maintenance needs directly to your smartphone.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-card-inner">
+          <div class="feature-front">
+            <div class="feature-icon">💡</div>
+            <h3 class="feature-title">Adaptive Lighting</h3>
+            <p>Smart LED system that mimics natural cycles</p>
+          </div>
+          <div class="feature-back">
+            <h3>Adaptive Lighting</h3>
+            <p>Our programmable LED lighting system replicates natural day/night cycles and can simulate specific underwater environments. Perfect for encouraging natural behavior in fish and optimal growth in aquatic plants. The lights automatically adjust based on the season, fish species, and plant requirements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Section -->
+  <section id="team">
+    <h2 class="section-title">Meet Our Team</h2>
+    <div class="team-container">
+      <div class="team-card">
+        <div class="team-img" style="background-color: #005D8F;"></div>
+        <h3 class="team-name">Alex Chen</h3>
+        <p class="team-role">Founder & CEO</p>
+        <p class="team-bio">Marine biologist turned tech entrepreneur with a passion for bringing innovation to aquarium management. Alex has over 15 years of experience in marine research and aquatic systems design.</p>
+        <div class="team-social">
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>tw</i></a>
+        </div>
+      </div>
+      
+      <div class="team-card">
+        <div class="team-img" style="background-color: #00BFD9;"></div>
+        <h3 class="team-name">Sara Johnson</h3>
+        <p class="team-role">CTO</p>
+        <p class="team-bio">IoT and AI specialist with extensive experience in developing smart home technologies. Sara leads our technical development and AI integration for creating truly intelligent aquarium systems.</p>
+        <div class="team-social">
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>gh</i></a>
+        </div>
+      </div>
+      
+      <div class="team-card">
+        <div class="team-img" style="background-color: #00E3CC;"></div>
+        <h3 class="team-name">Marco Rodriguez</h3>
+        <p class="team-role">Hardware Engineer</p>
+        <p class="team-bio">Electronics expert specializing in sensor technology and ESP32 implementations. Marco designs and builds the hardware components that make our smart aquarium systems possible.</p>
+        <div class="team-social">
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>gh</i></a>
+        </div>
+      </div>
+      
+      <div class="team-card">
+        <div class="team-img" style="background-color: #005D8F;"></div>
+        <h3 class="team-name">Leila Patel</h3>
+        <p class="team-role">AI Researcher</p>
+        <p class="team-bio">PhD in computer vision and machine learning with a focus on aquatic ecosystems. Leila develops the AI models that power our fish recognition and behavior analysis systems.</p>
+        <div class="team-social">
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>tw</i></a>
+        </div>
+      </div>
+      
+      <div class="team-card">
+        <div class="team-img" style="background-color: #00BFD9;"></div>
+        <h3 class="team-name">David Kim</h3>
+        <p class="team-role">Software Developer</p>
+        <p class="team-bio">Full-stack developer specializing in IoT platforms and mobile applications. David creates the software that connects our hardware to your smartphone, making control intuitive and seamless.</p>
+        <div class="team-social">
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>gh</i></a>
+        </div>
+      </div>
+      
+      <div class="team-card">
+        <div class="team-img" style="background-color: #00E3CC;"></div>
+        <h3 class="team-name">Emma Wilson</h3>
+        <p class="team-role">Aquatic Specialist</p>
+        <p class="team-bio">Professional aquarist with experience in commercial and residential aquarium management. Emma ensures our technology is designed with the real needs of fish and aquarium owners in mind.</p>
+        <div class="team-social">
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>ig</i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="testimonials-container">
+      <div class="testimonial">
+        <p class="testimonial-text">"AquaFuture has completely transformed my aquarium experience. The AI monitoring gives me peace of mind when I'm away, and the automated feeding system ensures my fish are healthy and happy. It's like having a professional aquarist at home 24/7!"</p>
+        <div class="testimonial-author">
+          <div class="author-img"></div>
+          <div class="author-info">
+            <h4>Michael Tran</h4>
+            <p>Reef Enthusiast</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial">
+        <p class="testimonial-text">"As a busy professional, I never thought I could maintain a thriving aquarium. The AquaFuture system makes it not only possible but incredibly easy. The water quality predictions have prevented countless problems before they started, and the mobile app lets me check on my underwater world anytime."</p>
+        <div class="testimonial-author">
+          <div class="author-img"></div>
+          <div class="author-info">
+            <h4>Jennifer Lopez</h4>
+            <p>First-time Aquarium Owner</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial">
+        <p class="testimonial-text">"I've been in the aquarium hobby for 25 years, and AquaFuture is genuinely revolutionary. The AI fish recognition detected signs of illness in my angelfish before I noticed any symptoms, potentially saving my entire tank. The technology is impressive, but what really matters is that it works!"</p>
+        <div class="testimonial-author">
+          <div class="author-img"></div>
+          <div class="author-info">
+            <h4>Robert Chen</h4>
+            <p>Veteran Aquarium Hobbyist</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#003B59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 9a7 7 0 0 1 12-4"></path>
+              <path d="M15 5h7v7"></path>
+              <path d="M2 16a7 7 0 0 0 12 4"></path>
+              <path d="M9 19h7v-7"></path>
+            </svg>
+          </div>
+          AquaFuture
+        </div>
+        <p>Revolutionizing aquarium management with AI and IoT technology for a perfect harmony of nature and innovation.</p>
+        <div class="social-links">
+          <a href="#"><i>fb</i></a>
+          <a href="#"><i>tw</i></a>
+          <a href="#"><i>ig</i></a>
+          <a href="#"><i>in</i></a>
+          <a href="#"><i>yt</i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="#">Oceanic Elegance</a></li>
+          <li><a href="#">Reef Explorer</a></li>
+          <li><a href="#">Nano Cube</a></li>
+          <li><a href="#">Custom Solutions</a></li>
+          <li><a href="#">Accessories</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">User Guides</a></li>
+          <li><a href="#">Contact Support</a></li>
+          <li><a href="#">Warranty Info</a></li>
+          <li><a href="#">Shipping Details</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 AquaFuture. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Hamburger Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+    
+    // Generate random bubbles
+    function createBubbles() {
+      const bubblesContainer = document.getElementById('bubbles');
+      
+      for (let i = 0; i < 30; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        
+        const size = Math.random() * 20 + 5;
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        
+        const left = Math.random() * 100;
+        bubble.style.left = `${left}%`;
+        
+        const delay = Math.random() * 10;
+        const duration = Math.random() * 10 + 10;
+        
+        bubble.style.animation = `bubble-rise ${duration}s infinite`;
+        bubble.style.animationDelay = `${delay}s`;
+        
+        bubblesContainer.appendChild(bubble);
+      }
+    }
+    
+    // Generate fish swimming
+    function createFish() {
+      const fishContainer = document.getElementById('fish-container');
+      
+      for (let i = 0; i < 8; i++) {
+        const fish = document.createElement('div');
+        fish.classList.add('fish');
+        
+        const size = Math.random() * 0.5 + 0.8;
+        fish.style.transform = `scale(${size})`;
+        
+        const y = Math.random() * 90 + 5;
+        fish.style.setProperty('--y', `${y}vh`);
+        
+        const delay = Math.random() * 20;
+        const duration = Math.random() * 20 + 20;
+        
+        fish.style.animation = `fish-swim ${duration}s linear infinite`;
+        fish.style.animationDelay = `${delay}s`;
+        
+        fishContainer.appendChild(fish);
+      }
+    }
+    
+    // Initialize animations
+    window.addEventListener('load', () => {
+      createBubbles();
+      createFish();
+    });
+  </script>
+</body>
+</html>
